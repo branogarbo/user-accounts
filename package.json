@@ -1,0 +1,30 @@
+{
+  "name": "user-accounts",
+  "version": "1.0.0",
+  "description": "Allowing users to save data to their account.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/branogarbo/user-accounts.git"
+  },
+  "author": "Brian Longmore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/branogarbo/user-accounts/issues"
+  },
+  "homepage": "https://github.com/branogarbo/user-accounts#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongodb": "^3.5.6"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
