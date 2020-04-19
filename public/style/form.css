@@ -1,0 +1,8 @@
+body {
+   display:grid;
+   place-content:center;
+}
+
+form > * {
+   display:block;
+}

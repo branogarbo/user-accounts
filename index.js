@@ -3,6 +3,7 @@ let session = require('express-session');
 let bodyParser = require('body-parser');
 let path = require('path');
 let env = require('dotenv');
+
 let main = require('./routes/main.js');
 let users = require('./routes/users.js');
 
@@ -23,6 +24,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/',main);
-app.use('users',users);
+app.use('/users',users);
 
 app.listen(port, console.log(`listening on port ${port}`));

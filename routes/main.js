@@ -1,7 +1,7 @@
 let express = require('express');
 let MongoClient = require('mongodb').MongoClient;
 let env = require('dotenv');
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcryptjs');
 
 env.config();
 let dburl = process.env.DB_URL;
@@ -13,11 +13,19 @@ router.get('/', (req,res)=>{
 });
 
 router.get('/login', (req,res)=>{
-   res.render('pages/form',{});
+   res.render('pages/form',{
+      title: 'Log In',
+      linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+      postRoute: '/login'
+   });
 });
 
 router.get('/signup', (req,res)=>{
-   res.render('pages/form',{});
+   res.render('pages/form',{
+      title: 'Sign Up',
+      linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+      postRoute: '/signup'
+   });
 });
 
 router.post('/login', (req,res)=>{
@@ -26,7 +34,7 @@ router.post('/login', (req,res)=>{
    if (username && password) {
       MongoClient.connect(dburl, (err,client)=>{
 
-         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,result)=>{
+         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
             if (results.length == 1) {
                let isMatched = await bcrypt.compare(password, result.password);
 
@@ -59,22 +67,22 @@ router.post('/signup', (req,res)=>{
    if (username && password) {
       MongoClient.connect(dburl, (err,client)=>{
 
-         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,result)=>{
-            if (result.length > 0) {
+         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
+            if (results.length > 0) {
                res.send('this username has already been taken');
             }
             else {
                let hashedPass = await bcrypt.hash(password,10);
 
-               client.db('').collection('').insertOne({username:username, password: hashedPass});
+               client.db('user-accounts').collection('users').insertOne({username:username, password: hashedPass});
 
                req.session.username = username;
                req.session.loggedin = true;
                res.redirect('/users/home');
             }
+            client.close();
          });
-
-         client.close();
+            
       });
    }
    else {
