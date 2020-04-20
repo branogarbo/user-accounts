@@ -50,7 +50,7 @@ router.post('/login', (req,res)=>{
                      title: 'Log In',
                      linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
                      postRoute: '/login',
-                     authmsg: 'Wrong username and/or password'
+                     authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password</span>'
                   });
                }
             }
@@ -59,7 +59,7 @@ router.post('/login', (req,res)=>{
                   title: 'Log In',
                   linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
                   postRoute: '/login',
-                  authmsg: 'Wrong username and/or password'
+                  authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password</span>'
                });
             }
 
@@ -73,7 +73,7 @@ router.post('/login', (req,res)=>{
          title: 'Log In',
          linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
          postRoute: '/login',
-         authmsg: 'Please complete the form'
+         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form</span>'
       });
    }
 });
@@ -90,7 +90,7 @@ router.post('/signup', (req,res)=>{
                   title: 'Sign Up',
                   linkmsg: `Already have an account? <a href="/login">Log In</a>`,
                   postRoute: '/signup',
-                  authmsg: 'That username is already taken'
+                  authmsg: '<img src="/images/warning.svg"> <span>That username is already taken</span>'
                });
             }
             else {
@@ -100,7 +100,7 @@ router.post('/signup', (req,res)=>{
 
                req.session.username = username;
                req.session.loggedin = true;
-               res.redirect('/users/home');
+               res.redirect('/user/home');
             }
             client.close();
          });
@@ -112,7 +112,7 @@ router.post('/signup', (req,res)=>{
          title: 'Sign Up',
          linkmsg: `Already have an account? <a href="/login">Log In</a>`,
          postRoute: '/signup',
-         authmsg: 'Please complete the form'
+         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form</span>'
       });
    }
 });

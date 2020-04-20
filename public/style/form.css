@@ -8,19 +8,20 @@ body {
    font-family: 'Roboto', sans-serif;
    margin-bottom:1rem;
 }
+
+#cont img {
+   width:20px;
+   height:20px;
+   margin-right:10px;
+}
+
 form > * {
    display:block;
    padding:0.7rem;
 }
 
-#authmsg {
-   color:red;
-   font-weight:500;
-   position:absolute;
-}
-
 input {
-   width:15rem;
+   width:16rem;
    border:1px solid #3e5c76;
    border-radius:1px;
 }
@@ -38,6 +39,15 @@ a {
    color:#006eff;
 }
 
+#authmsg {
+   color:red;
+   font-weight:500;
+   align-items:center;
+   position:absolute;
+   display:flex;
+   align-items:center;
+}
+
 #loader {
    display:none;
    position:absolute;
@@ -46,9 +56,6 @@ a {
 }
 
 #loader > img {
-   width:20px;
-   height:20px;
-   margin-right:10px;
    animation: spin 1s linear infinite  both;
 }
 
