@@ -1,6 +1,7 @@
 body {
    display:grid;
    place-content:center;
+   color:#1d2d44;
 }
 
 * {
@@ -20,18 +21,38 @@ form > * {
 
 input {
    width:15rem;
-   border:1px solid #636363;
+   border:1px solid #3e5c76;
    border-radius:1px;
 }
 
 input[type="submit"] {
-   background:#636363;
+   background:#1d2d44;
    outline:none;
    color:white;
    cursor:pointer;
+   border:none;
 }
 
 a {
    text-decoration:none;
    color:#006eff;
+}
+
+#loader {
+   display:none;
+   position:absolute;
+   align-items:center;
+   font-weight:500;
+}
+
+#loader > img {
+   width:20px;
+   height:20px;
+   margin-right:10px;
+   animation: spin 1s linear infinite  both;
+}
+
+@keyframes spin {
+   from {transform:rotate(0deg)}
+   to {transform:rotate(360deg)}
 }

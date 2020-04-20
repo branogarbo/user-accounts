@@ -17,3 +17,15 @@
 //
 //   document.querySelector('#authmsg').innerHTML = res.authmsg;   
 //}
+
+let el = selector => document.querySelectorAll(selector);
+
+el('form')[0].onsubmit = () => {
+   el('#loader')[0].style.display = "flex";
+};
+
+el('form > input').forEach(input => {
+   input.onfocus = () => {
+      el('#authmsg')[0].style.display = "none";
+   }
+})
