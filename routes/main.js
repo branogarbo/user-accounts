@@ -16,7 +16,8 @@ router.get('/login', (req,res)=>{
    res.render('pages/form',{
       title: 'Log In',
       linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
-      postRoute: '/login'
+      postRoute: '/login',
+      authmsg: ''
    });
 });
 
@@ -24,7 +25,8 @@ router.get('/signup', (req,res)=>{
    res.render('pages/form',{
       title: 'Sign Up',
       linkmsg: `Already have an account? <a href="/login">Log In</a>`,
-      postRoute: '/signup'
+      postRoute: '/signup',
+      authmsg: ''
    });
 });
 
@@ -36,7 +38,7 @@ router.post('/login', (req,res)=>{
 
          client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
             if (results.length == 1) {
-               let isMatched = await bcrypt.compare(password, result.password);
+               let isMatched = await bcrypt.compare(password, results[0].password);
 
                if (isMatched) {
                   req.session.username = username;
@@ -44,11 +46,21 @@ router.post('/login', (req,res)=>{
                   res.redirect('/user/home');
                }
                else {
-                  res.send('wrong username or password'); // make this render form with message later.
+                  res.render('pages/form',{
+                     title: 'Log In',
+                     linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+                     postRoute: '/login',
+                     authmsg: 'Wrong username and/or password'
+                  });
                }
             }
             else {
-               res.send('wrong username or password'); // make this render form with message later.
+               res.render('pages/form',{
+                  title: 'Log In',
+                  linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+                  postRoute: '/login',
+                  authmsg: 'Wrong username and/or password'
+               });
             }
 
             client.close();
@@ -57,7 +69,12 @@ router.post('/login', (req,res)=>{
       });
    }
    else {
-      res.send('pls fill both fields'); // make this render form with message later.
+      res.render('pages/form',{
+         title: 'Log In',
+         linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+         postRoute: '/login',
+         authmsg: 'Please complete the form'
+      });
    }
 });
 
@@ -69,7 +86,12 @@ router.post('/signup', (req,res)=>{
 
          client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
             if (results.length > 0) {
-               res.send('this username has already been taken');
+               res.render('pages/form',{
+                  title: 'Sign Up',
+                  linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+                  postRoute: '/signup',
+                  authmsg: 'That username is already taken'
+               });
             }
             else {
                let hashedPass = await bcrypt.hash(password,10);
@@ -86,7 +108,12 @@ router.post('/signup', (req,res)=>{
       });
    }
    else {
-      res.send('pls fill both fields'); // make this render form with message later.
+      res.render('pages/form',{
+         title: 'Sign Up',
+         linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+         postRoute: '/signup',
+         authmsg: 'Please complete the form'
+      });
    }
 });
 

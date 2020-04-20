@@ -3,6 +3,35 @@ body {
    place-content:center;
 }
 
+* {
+   font-family: 'Roboto', sans-serif;
+   margin-bottom:1rem;
+}
 form > * {
    display:block;
+   padding:0.7rem;
+}
+
+#authmsg {
+   color:red;
+   font-weight:500;
+   position:absolute;
+}
+
+input {
+   width:15rem;
+   border:1px solid #636363;
+   border-radius:1px;
+}
+
+input[type="submit"] {
+   background:#636363;
+   outline:none;
+   color:white;
+   cursor:pointer;
+}
+
+a {
+   text-decoration:none;
+   color:#006eff;
 }
