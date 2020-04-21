@@ -1,7 +1,7 @@
 let express = require('express');
 let MongoClient = require('mongodb').MongoClient;
-let env = require('dotenv');
 let bcrypt = require('bcryptjs');
+let env = require('dotenv');
 
 env.config();
 let dburl = process.env.DB_URL;
