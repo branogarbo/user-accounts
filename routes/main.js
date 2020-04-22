@@ -1,6 +1,6 @@
 let express = require('express');
 let MongoClient = require('mongodb').MongoClient;
-let bcrypt = require('bcryptjs');
+let bcrypt = require('bcrypt');
 let env = require('dotenv');
 
 env.config();
