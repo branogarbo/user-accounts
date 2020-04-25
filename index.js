@@ -5,7 +5,7 @@ let path = require('path');
 let env = require('dotenv');
 
 let main = require('./routes/main.js');
-let users = require('./routes/users.js');
+let user = require('./routes/user.js');
 
 env.config();
 let port = process.env.PORT;
@@ -24,6 +24,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/',main);
-app.use('/users',users);
+app.use('/user',user);
 
 app.listen(port, console.log(`listening on port ${port}`));

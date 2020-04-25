@@ -1,32 +1,38 @@
 let express = require('express');
 let MongoClient = require('mongodb').MongoClient;
 let bcrypt = require('bcrypt');
-let env = require('dotenv');
+let env = require('dotenv').config();
 
-env.config();
 let dburl = process.env.DB_URL;
 
 let router = express.Router();
 
 router.get('/', (req,res)=>{
-   res.redirect('/login');
+   if (req.session.loggedin) {
+      res.redirect('/user/home');
+   }
+   else {
+      res.redirect('/login');
+   }
 });
 
 router.get('/login', (req,res)=>{
    res.render('pages/form',{
       title: 'Log In',
-      linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
       postRoute: '/login',
-      authmsg: ''
+      linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+      authmsg: '',
+      emailField: false
    });
 });
 
 router.get('/signup', (req,res)=>{
    res.render('pages/form',{
       title: 'Sign Up',
-      linkmsg: `Already have an account? <a href="/login">Log In</a>`,
       postRoute: '/signup',
-      authmsg: ''
+      linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+      authmsg: '',
+      emailField: true
    });
 });
 
@@ -36,9 +42,9 @@ router.post('/login', (req,res)=>{
    if (username && password) {
       MongoClient.connect(dburl, (err,client)=>{
 
-         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
-            if (results.length == 1) {
-               let isMatched = await bcrypt.compare(password, results[0].password);
+         client.db('user-accounts').collection('users').findOne({username:username}, async (err,result)=>{
+            if (result) {
+               let isMatched = await bcrypt.compare(password, result.password);
 
                if (isMatched) {
                   req.session.username = username;
@@ -48,18 +54,20 @@ router.post('/login', (req,res)=>{
                else {
                   res.render('pages/form',{
                      title: 'Log In',
-                     linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
                      postRoute: '/login',
-                     authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password!</span>'
+                     linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+                     authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password!</span>',
+                     emailField: false
                   });
                }
             }
             else {
                res.render('pages/form',{
                   title: 'Log In',
-                  linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
                   postRoute: '/login',
-                  authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password!</span>'
+                  linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+                  authmsg: '<img src="/images/warning.svg"> <span>Wrong username and/or password!</span>',
+                  emailField: false
                });
             }
 
@@ -71,32 +79,39 @@ router.post('/login', (req,res)=>{
    else {
       res.render('pages/form',{
          title: 'Log In',
-         linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
          postRoute: '/login',
-         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form!</span>'
+         linkmsg: `Don't have an account? <a href="/signup">Sign Up</a>`,
+         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form!</span>',
+         emailField: false
       });
    }
 });
 
 router.post('/signup', (req,res)=>{
-   ({username,password} = req.body);
+   ({username,password,email} = req.body);
    
    if (username && password) {
       MongoClient.connect(dburl, (err,client)=>{
 
-         client.db('user-accounts').collection('users').find({username:username}).toArray(async (err,results)=>{
-            if (results.length > 0) {
+         client.db('user-accounts').collection('users').findOne({username:username}, async (err,result)=>{
+            if (result) {
                res.render('pages/form',{
                   title: 'Sign Up',
-                  linkmsg: `Already have an account? <a href="/login">Log In</a>`,
                   postRoute: '/signup',
-                  authmsg: '<img src="/images/warning.svg"> <span>That username is already taken!</span>'
+                  linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+                  authmsg: '<img src="/images/warning.svg"> <span>That username is already taken!</span>',
+                  emailField: true
                });
             }
             else {
                let hashedPass = await bcrypt.hash(password,10);
 
-               client.db('user-accounts').collection('users').insertOne({username:username, password: hashedPass});
+               client.db('user-accounts').collection('users').insertOne({
+                  username: username, 
+                  password: hashedPass,
+                  emailField: email,
+                  notes: []
+               });
 
                req.session.username = username;
                req.session.loggedin = true;
@@ -110,9 +125,10 @@ router.post('/signup', (req,res)=>{
    else {
       res.render('pages/form',{
          title: 'Sign Up',
-         linkmsg: `Already have an account? <a href="/login">Log In</a>`,
          postRoute: '/signup',
-         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form!</span>'
+         linkmsg: `Already have an account? <a href="/login">Log In</a>`,
+         authmsg: '<img src="/images/warning.svg"> <span>Please complete the form!</span>',
+         emailField: true
       });
    }
 });

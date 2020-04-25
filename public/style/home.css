@@ -1,0 +1,89 @@
+body {
+	margin:0;
+	display:flex;
+	justify-content:center;
+}
+
+* {
+	font-family: 'Roboto', sans-serif;
+	color:#3c4043;
+}
+
+#header {
+	position:fixed;
+	width:calc(100vw - 3rem);
+	border-bottom:2px solid grey;
+	padding:0 1.5rem;
+	top:0;
+	left:0;
+	background:#ffffff;
+}
+
+#cont {
+	margin-top:6rem;
+}
+
+#cont > * {
+	display:inline-block;
+	margin:1rem;
+}
+
+#noteadd, #notes > * {
+	border:1px solid #b3b3b3;
+	border-radius:10px;
+	padding:1.5rem;
+	margin-bottom:1rem;
+}
+
+#noteadd {
+	width:30rem;
+}
+
+#noteadd > * {
+	outline:none;
+	border:none;
+	width:100%;
+}
+
+#noteadd > textarea {
+	height:12rem;
+	resize:vertical;
+}
+
+#noteadd > input[type="text"] {
+	padding-bottom:1rem;
+}
+
+#noteadd > button {
+	padding:10px;
+	border-radius:5px;
+}
+
+#notes, #notes .util {
+	float:right;
+}
+
+#notes > * {
+	width:30rem;
+}
+
+#notes .noteHead {
+	width:100%;
+	margin-bottom:1rem;
+}
+
+#notes .util {
+	display:flex;
+	align-items:center;
+}
+
+#notes .text {
+	white-space:pre-line;
+	word-wrap:break-word;
+}
+
+#notes .delBttn {
+	width:17px;
+	height:17px;
+	margin-left:1rem;
+}

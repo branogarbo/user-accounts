@@ -1,0 +1,28 @@
+<html>
+   <head>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="/style/home.css">
+   </head>
+   <body>
+      
+      <div id="header">
+         <h1><%- session.username %>'s notes</h1>
+      </div>
+      
+      <div id="cont">
+         <div id="noteadd">
+            <input maxlength="18" type="text" placeholder="Title">
+            <textarea placeholder="Your note"></textarea>
+            <button onclick="submit()">save</button>
+         </div>
+
+         <div id="notes">
+            <% for (i=0; i<session.notes.length; i++) { %>
+               <%- include('../components/noteBox',session) %> 
+            <% }; %>
+         </div>
+      </div>
+
+      <script src="/scripts/home.js"></script>
+   </body>
+</html>

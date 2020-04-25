@@ -8,8 +8,13 @@
       <div id="cont">
          <h1 id="title"><%= title %></h1>
          <form method="POST" action="<%- postRoute %>">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="username" placeholder="Username*" required>
+            <input type="password" name="password" placeholder="Password*" required>
+
+            <% if (emailField) { %>
+               <input type="text" name="email" placeholder="Email"> <!-- require? -->
+            <% }; %>
+
             <input type="submit">
          </form>
          <div id="linkmsg"><%- linkmsg %></div>
