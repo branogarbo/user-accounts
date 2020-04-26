@@ -2,17 +2,18 @@ body {
 	margin:0;
 	display:flex;
 	justify-content:center;
+	color:#1d2d44;
 }
 
 * {
 	font-family: 'Roboto', sans-serif;
-	color:#3c4043;
+	letter-spacing:0.05rem;
 }
 
 #header {
 	position:fixed;
 	width:calc(100vw - 3rem);
-	border-bottom:2px solid grey;
+	border-bottom:2px solid #1d2d44;
 	padding:0 1.5rem;
 	top:0;
 	left:0;
@@ -29,7 +30,7 @@ body {
 }
 
 #noteadd, #notes > * {
-	border:1px solid #b3b3b3;
+	border:1px solid #748CAB;
 	border-radius:10px;
 	padding:1.5rem;
 	margin-bottom:1rem;
@@ -43,6 +44,7 @@ body {
 	outline:none;
 	border:none;
 	width:100%;
+	font-size:1rem;
 }
 
 #noteadd > textarea {
@@ -72,6 +74,12 @@ body {
 	margin-bottom:1rem;
 }
 
+#notes .noteTitle {
+	width:15rem;
+	display:inline-block;
+	word-wrap:break-word;
+}
+
 #notes .util {
 	display:flex;
 	align-items:center;
@@ -83,7 +91,13 @@ body {
 }
 
 #notes .delBttn {
-	width:17px;
-	height:17px;
+	width:1rem;
+	height:1rem;
 	margin-left:1rem;
+}
+
+@media only screen and (max-width:1148px) {
+	#cont > * {
+		display:block;
+	}
 }

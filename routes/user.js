@@ -51,11 +51,27 @@ router.post('/notes', (req,res)=>{
 
          // try to do res.render here if can
          res.end();
-         
          client.close();
       });
    });
 
+});
+
+router.delete('/notes', (req,res)=>{
+   let noteNum = req.body.noteNum;
+
+   req.session.notes.splice(noteNum,1);
+
+   MongoClient.connect(dburl, (err,client)=>{
+      client.db('user-accounts').collection('users').updateOne({username:req.session.username},{
+         $set: {notes:req.session.notes}
+      }, (err,meta)=>{
+         
+         // try to do res.render here if can
+         client.close();
+         res.end();
+      });
+   });
 });
 
 module.exports = router;
