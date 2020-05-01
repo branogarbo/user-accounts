@@ -3,7 +3,7 @@
       <b class="noteTitle"><%- session.notes[i].title %></b>
       <div class="util">
          <b class="timeStamp"><%- session.notes[i].timestamp %></b>
-         <img onclick="deleteNote(this.getAttribute('data-bttnNum'))" class="delBttn" data-bttnNum="<%- i %>" src="/images/delBttn.svg">
+         <img onclick="deleteNote([...el('#notes .delBttn')].indexOf(this))" class="delBttn" src="/images/delBttn.svg">
       </div>
    </div>
    <div class="text"><%- session.notes[i].text %></div>
